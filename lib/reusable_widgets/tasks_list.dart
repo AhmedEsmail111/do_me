@@ -8,7 +8,7 @@ class TasksList extends StatelessWidget {
   final bool isDone;
   final Function onChanged;
   final Function onLongPress;
-  TasksList({this.isDone, this.taskTitle, this.onChanged, this.onLongPress});
+  TasksList({required this.isDone, required this.taskTitle, required this.onChanged, required this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
