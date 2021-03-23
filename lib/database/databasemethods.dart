@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:do_me/model/task.dart';
+import 'package:do_me/services/tasksProvider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:do_me/main.dart';
 

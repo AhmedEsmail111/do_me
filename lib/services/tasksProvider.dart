@@ -12,6 +12,9 @@ class TasksProvider extends ChangeNotifier {
   List<Task> _tasks = [];
   TasksProvider() {
     initializeTasks();
+  }
+  void initializeTasks() async {
+    _tasks = await getTasks();
     notifyListeners();
   }
 
@@ -19,24 +22,18 @@ class TasksProvider extends ChangeNotifier {
     return UnmodifiableListView(_tasks);
   }
 
-  Future<void> addTask(Task task) async {
+  addTask(Task task) {
     insertTask(task);
     initializeTasks();
-    notifyListeners();
-  }
-
-  void initializeTasks() async {
-    _tasks = await getTasks();
-    notifyListeners();
   }
 
   update({required Task newTask, required int index}) {
     updateTask(newTask: newTask, index: index);
-    notifyListeners();
+    initializeTasks();
   }
 
   delete(int index) {
     deleteTask(index);
-    notifyListeners();
+    initializeTasks();
   }
 }
