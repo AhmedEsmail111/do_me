@@ -13,7 +13,7 @@ class TasksProvider extends ChangeNotifier {
   TasksProvider() {
     initializeTasks();
   }
-  void initializeTasks() async {
+  Future<void> initializeTasks() async {
     _tasks = await getTasks();
     notifyListeners();
   }
@@ -24,16 +24,16 @@ class TasksProvider extends ChangeNotifier {
 
   addTask(Task task) {
     insertTask(task);
-    initializeTasks();
+    notifyListeners();
   }
 
   update({required Task newTask, required int index}) {
     updateTask(newTask: newTask, index: index);
-    initializeTasks();
+    notifyListeners();
   }
 
   delete(int index) {
     deleteTask(index);
-    initializeTasks();
+    notifyListeners();
   }
 }

@@ -19,7 +19,7 @@ void main() async {
     },
     version: 1,
   );
-  TasksProvider();
+  // TasksProvider();
   runApp(MyApp());
 }
 

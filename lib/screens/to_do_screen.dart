@@ -86,34 +86,45 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0),
                     )),
-                child: ListView.builder(
-                    itemCount: Provider.of<TasksProvider>(context, listen: true)
-                        .tasks
-                        .length,
-                    itemBuilder: (context, index) {
-                      // a reference to the current task index
-                      final task =
-                          Provider.of<TasksProvider>(context, listen: true)
-                              .tasks[index];
+                child: FutureBuilder(
+                  future: Provider.of<TasksProvider>(context).initializeTasks(),
+                  builder: (context, snapshot) => snapshot.connectionState ==
+                          ConnectionState.none
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount:
+                              Provider.of<TasksProvider>(context, listen: true)
+                                  .tasks
+                                  .length,
+                          itemBuilder: (context, index) {
+                            // a reference to the current task index
+                            final task = Provider.of<TasksProvider>(context,
+                                    listen: false)
+                                .tasks[index];
 
-                      return TasksList(
-                        taskTitle: task.taskTitle,
-                        isDone: task.isDone == 0 ? false : true,
-                        onChanged: (value) {
-                          int buttonState = value == true ? 1 : 0;
-                          final newTask = Task(
+                            return TasksList(
                               taskTitle: task.taskTitle,
-                              isDone: buttonState,
-                              id: task.id);
-                          Provider.of<TasksProvider>(context, listen: false)
-                              .update(newTask: newTask, index: task.id);
-                        },
-                        onLongPress: () {
-                          Provider.of<TasksProvider>(context, listen: false)
-                              .delete(task.id);
-                        },
-                      );
-                    })),
+                              isDone: task.isDone == 0 ? false : true,
+                              onChanged: (value) {
+                                int buttonState = value == true ? 1 : 0;
+                                final newTask = Task(
+                                    taskTitle: task.taskTitle,
+                                    isDone: buttonState,
+                                    id: task.id);
+                                Provider.of<TasksProvider>(context,
+                                        listen: false)
+                                    .update(newTask: newTask, index: task.id);
+                              },
+                              onLongPress: () {
+                                Provider.of<TasksProvider>(context,
+                                        listen: false)
+                                    .delete(task.id);
+                              },
+                            );
+                          }),
+                )),
           ),
         ],
       ),
