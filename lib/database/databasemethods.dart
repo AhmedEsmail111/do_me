@@ -46,7 +46,7 @@ Future<void> updateTask({required Task newTask, required int index}) async {
 Future<void> deleteTask(int index) async {
   // get a reference to the data base
   final Database db = await database;
-// Update the given Task.
+// Delete the given Task.
   await db.delete(
     'tasks',
     // Ensure that the Dog has a matching id.
